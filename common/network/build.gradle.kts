@@ -36,6 +36,12 @@ kotlin {
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
         }
+
+        val commonTest by getting {
+            dependencies {
+                implementation(project(":testing"))
+            }
+        }
     }
 }
 
@@ -61,5 +67,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
+
 
 
