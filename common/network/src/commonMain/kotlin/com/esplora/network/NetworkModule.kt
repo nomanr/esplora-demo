@@ -15,7 +15,6 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val networkModule = module {
-
     single {
         Json {
             ignoreUnknownKeys = true

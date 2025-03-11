@@ -18,9 +18,13 @@ kotlin {
 
 
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.koin.android)
+        }
         commonMain.dependencies {
             api(project(":common:network"))
             api(project(":common:store"))
+            implementation(libs.koin.core)
         }
 
     }
