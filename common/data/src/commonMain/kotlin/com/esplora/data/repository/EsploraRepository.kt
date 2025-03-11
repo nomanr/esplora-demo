@@ -13,4 +13,5 @@ interface EsploraRepository {
     suspend fun fetchAndStoreTransactions(address: String)
     fun observeAllBalances(): Flow<List<BalanceByAddress>>
     fun observeAllTransactions(): Flow<Map<String, List<Transaction>>>
+    fun observeTransactionsByAddress(address: String): Flow<List<Transaction>?>
 }

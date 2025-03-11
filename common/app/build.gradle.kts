@@ -37,6 +37,7 @@ kotlin {
             implementation(libs.ktor.client.android)
         }
         commonMain.dependencies {
+            implementation(project(":common:domain"))
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -46,12 +47,10 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.koin.composeVM)
-            api(libs.koin.core)
             implementation(libs.koin.compose)
-
             implementation(libs.ktor.client.core)
-
-            implementation(project(":common:domain"))
+            implementation(libs.composables)
+            api(libs.koin.core)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

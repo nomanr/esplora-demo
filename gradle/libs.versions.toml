@@ -1,5 +1,6 @@
 [versions]
 compileSdk = "35"
+composables = "1.1.0"
 minSdk = "24"
 targetSdk = "35"
 jvmTarget = "17"
@@ -51,6 +52,7 @@ androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", nam
 androidx-material = { group = "com.google.android.material", name = "material", version.ref = "androidx-material" }
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-junit" }
 
+composables = { module = "com.nomanr:composables", version.ref = "composables" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }

@@ -25,6 +25,9 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
     val addresses by viewModel.addresses.collectAsStateWithLifecycle()
+    val transactions by viewModel.transactions.collectAsStateWithLifecycle()
+    val selectedAddress = viewModel.selectedAddress
+
     val totalBalance by derivedStateOf {
         addresses?.sumOf { address -> address.balance } ?: 0.0
     }
@@ -35,9 +38,18 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
         ) {
             BalanceCard(totalBalance = totalBalance)
             Spacer(modifier = Modifier.padding(8.dp))
-            AddressList(addresses = addresses ?: emptyList())
+            AddressList(addresses = addresses ?: emptyList()) {
+                viewModel.onAddressSelected(it)
+            }
         }
+
+
     }
+
+    TransactionListModal(selectedAddress = selectedAddress,
+        transactionList = transactions ?: emptyList(),
+        onHideModal = { viewModel.onAddressSelected(null) })
+
 }
 
 @Composable
@@ -45,25 +57,22 @@ fun BalanceCard(totalBalance: Double) {
     Box(
         modifier = Modifier.fillMaxWidth().padding(8.dp), contentAlignment = Alignment.Center
     ) {
-
         Text(text = Formatter.formatBalance(totalBalance), style = AppTheme.typography.h1)
     }
 }
 
 @Composable
-fun AddressList(addresses: List<BalanceByAddress>) {
+fun AddressList(addresses: List<BalanceByAddress>, onClickItem: (BalanceByAddress) -> Unit = {}) {
     LazyColumn {
         items(addresses.size) { index ->
-            AddressListItem(address = addresses[index])
+            AddressListItem(address = addresses[index], onClickItem = onClickItem)
         }
     }
 }
 
 @Composable
-fun AddressListItem(address: BalanceByAddress) {
-    OutlinedCard(
-        modifier = Modifier.padding(top = 8.dp)
-    ) {
+fun AddressListItem(address: BalanceByAddress, onClickItem: (BalanceByAddress) -> Unit = {}) {
+    OutlinedCard(modifier = Modifier.padding(top = 8.dp), onClick = { onClickItem(address) }) {
         Column(
             Modifier.fillMaxWidth().padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {

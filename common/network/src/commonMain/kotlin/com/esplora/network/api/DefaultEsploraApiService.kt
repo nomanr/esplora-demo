@@ -9,9 +9,9 @@ import io.ktor.client.request.*
 class DefaultEsploraApiService(private val client: HttpClient) : EsploraApiService {
 
     override suspend fun getBalance(address: String): List<Utxo> =
-        client.get("address/$address/utxo").body()
+        client.get("testnet/api/address/$address/utxo").body()
 
     override suspend fun getTransactions(address: String): List<Transaction> =
-        client.get("address/$address/txs").body()
+        client.get("testnet/api/address/$address/txs").body()
 
 }

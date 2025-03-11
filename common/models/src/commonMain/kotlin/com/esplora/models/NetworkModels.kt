@@ -4,6 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 //TODO: A UTXO is just an unspent tx, we can use Transaction as parent
+//TODO: Better Network and Local models separation and ext functions for conversion
 
 @Serializable
 data class Utxo(
@@ -24,7 +25,7 @@ data class UtxoStatus(
 @Serializable
 data class Transaction(
     @SerialName("txid") val transactionId: String,
-    @SerialName("fee") val fee: Int,
+    @SerialName("fee") val fee: Double,
     @SerialName("status") val status: TransactionStatus
 )
 

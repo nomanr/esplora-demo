@@ -41,4 +41,8 @@ class DefaultEsploraRepository(private val apiService: EsploraApiService, privat
     override fun observeAllTransactions(): Flow<Map<String, List<Transaction>>> {
         return localStore.observeAllTransactions()
     }
+
+    override fun observeTransactionsByAddress(address: String): Flow<List<Transaction>?> {
+        return localStore.observeTransactions(address)
+    }
 }
