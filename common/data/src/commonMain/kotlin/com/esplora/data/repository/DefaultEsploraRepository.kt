@@ -1,6 +1,7 @@
 package com.esplora.data.repository
 
-import com.esplora.models.Balance
+import com.esplora.models.BalanceByAddress
+import com.esplora.models.Utxo
 import com.esplora.models.Transaction
 import com.esplora.network.api.EsploraApiService
 import com.esplora.store.local.EsploraLocalDataSource
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 class DefaultEsploraRepository(private val apiService: EsploraApiService, private val localStore: EsploraLocalDataSource) :
     EsploraRepository {
 
-    override suspend fun getBalance(address: String): Balance = apiService.getBalance(address)
+    override suspend fun getBalance(address: String): List<Utxo> = apiService.getBalance(address)
 
     override suspend fun getTransactions(address: String): List<Transaction> = apiService.getTransactions(address)
 
@@ -33,7 +34,7 @@ class DefaultEsploraRepository(private val apiService: EsploraApiService, privat
         }
     }
 
-    override fun observeAllBalances(): Flow<Map<String, Balance>> {
+    override fun observeAllBalances(): Flow<List<BalanceByAddress>> {
         return localStore.observeAllBalances()
     }
 

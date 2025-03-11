@@ -1,7 +1,8 @@
 package com.esplora.store.local
 
-import com.esplora.models.Balance
+import com.esplora.models.BalanceByAddress
 import com.esplora.models.Transaction
+import com.esplora.models.Utxo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -12,22 +13,24 @@ import kotlinx.coroutines.sync.withLock
 //TODO: for now its all in-memory, but in real world we should use some database to store this data.
 class DefaultEsploraLocalDataSource : EsploraLocalDataSource {
     private val mutex = Mutex()
-    private val balanceCache = MutableStateFlow<Map<String, Balance>>(emptyMap())
+    private val utxoCache = MutableStateFlow<Map<String, BalanceByAddress>>(emptyMap())
     private val transactionsCache = MutableStateFlow<Map<String, List<Transaction>>>(emptyMap())
 
-    override fun observeBalance(address: String): Flow<Balance?> =
-        balanceCache.map { it[address] }.distinctUntilChanged()
+    override fun observeBalance(address: String): Flow<BalanceByAddress?> = utxoCache.map { it[address] }.distinctUntilChanged()
 
-    override fun observeAllBalances(): Flow<Map<String, Balance>> = balanceCache
+    override fun observeAllBalances(): Flow<List<BalanceByAddress>> = utxoCache.map { it.values.toList() }.distinctUntilChanged()
 
     override fun observeTransactions(address: String): Flow<List<Transaction>?> =
         transactionsCache.map { it[address] }.distinctUntilChanged()
 
     override fun observeAllTransactions(): Flow<Map<String, List<Transaction>>> = transactionsCache
 
-    override suspend fun updateBalance(address: String, balance: Balance) {
+    override suspend fun updateBalance(address: String, utxo: List<Utxo>) {
         mutex.withLock {
-            balanceCache.value = balanceCache.value.toMutableMap().apply { put(address, balance) }
+            val totalBalance = utxo.sumOf { it.value }
+            utxoCache.value = utxoCache.value.toMutableMap().apply {
+                put(address, BalanceByAddress(address, totalBalance, utxo))
+            }
         }
     }
 
@@ -49,7 +52,7 @@ class DefaultEsploraLocalDataSource : EsploraLocalDataSource {
 
     override suspend fun clear() {
         mutex.withLock {
-            balanceCache.value = emptyMap()
+            utxoCache.value = emptyMap()
             transactionsCache.value = emptyMap()
         }
     }

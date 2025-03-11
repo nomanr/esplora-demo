@@ -2,15 +2,14 @@ package com.esplora.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.esplora.domain.interactors.GetBalanceInteractor
 import com.esplora.domain.interactors.ObserveBalanceInteractor
-import com.esplora.models.Balance
+import com.esplora.models.BalanceByAddress
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 
 
-class HomeViewModel(private val observeBalanceInteractor: ObserveBalanceInteractor) : ViewModel() {
+class HomeViewModel(observeBalanceInteractor: ObserveBalanceInteractor) : ViewModel() {
 
     init {
         println("NOMAN>>>>>, STARTING OBSERVE BALANCE INTERACTOR")
@@ -18,10 +17,9 @@ class HomeViewModel(private val observeBalanceInteractor: ObserveBalanceInteract
 
     }
 
-    val balances: StateFlow<Map<String, Balance>?> = observeBalanceInteractor
+    val addresses: StateFlow<List<BalanceByAddress>?> = observeBalanceInteractor
         .observe()
         .stateIn(viewModelScope, SharingStarted.Lazily, null)
-
 
 
     fun refresh() {
