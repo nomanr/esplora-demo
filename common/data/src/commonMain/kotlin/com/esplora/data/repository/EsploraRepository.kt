@@ -1,26 +1,15 @@
 package com.esplora.data.repository
 
-import com.esplora.network.models.*
+import com.esplora.models.Balance
+import com.esplora.models.Transaction
+import kotlinx.coroutines.flow.Flow
+
 
 interface EsploraRepository {
-
-    suspend fun getBalance(address: String): NetworkBalanceResponse
-
-    suspend fun getTransactions(address: String): List<NetworkTransactionResponse>
-
-    suspend fun getUnconfirmedTransactions(address: String): List<NetworkUnconfirmedTransactionResponse>
-
-    suspend fun getTransactionStatus(txid: String): NetworkTransactionStatusResponse
-
-    suspend fun getLatestBlockHeight(): Int
-
-    suspend fun getLatestBlockHash(): String
-
-    suspend fun getMempoolData(): NetworkMempoolResponse
-
-    suspend fun getMempoolTxIds(): List<String>
-
-    suspend fun getRecentMempoolTransactions(): List<NetworkTransactionResponse>
-
-    suspend fun getUTXOs(address: String): List<NetworkUTXOResponse>
+    suspend fun getBalance(address: String): Balance
+    suspend fun getTransactions(address: String): List<Transaction>
+    suspend fun fetchAndStoreBalance(address: String)
+    suspend fun fetchAndStoreTransactions(address: String)
+    fun observeAllBalances(): Flow<Map<String, Balance>>
+    fun observeAllTransactions(): Flow<Map<String, List<Transaction>>>
 }

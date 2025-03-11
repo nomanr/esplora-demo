@@ -1,37 +1,43 @@
 package com.esplora.data.repository
 
+import com.esplora.models.Balance
+import com.esplora.models.Transaction
 import com.esplora.network.api.EsploraApiService
-import com.esplora.network.models.*
+import com.esplora.store.local.EsploraLocalDataSource
+import kotlinx.coroutines.flow.Flow
 
-class DefaultEsploraRepository(private val apiService: EsploraApiService) : EsploraRepository {
+class DefaultEsploraRepository(private val apiService: EsploraApiService, private val localStore: EsploraLocalDataSource) :
+    EsploraRepository {
 
-    override suspend fun getBalance(address: String): NetworkBalanceResponse =
-        apiService.getBalance(address)
+    override suspend fun getBalance(address: String): Balance = apiService.getBalance(address)
 
-    override suspend fun getTransactions(address: String): List<NetworkTransactionResponse> =
-        apiService.getTransactions(address)
+    override suspend fun getTransactions(address: String): List<Transaction> = apiService.getTransactions(address)
 
-    override suspend fun getUnconfirmedTransactions(address: String): List<NetworkUnconfirmedTransactionResponse> =
-        apiService.getUnconfirmedTransactions(address)
+    //TODO: Better error handling, for now we consider it'll be success always, but that's not true in real world.
+    override suspend fun fetchAndStoreBalance(address: String) {
+        try {
+            val balance = getBalance(address)
+            localStore.updateBalance(address, balance)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
-    override suspend fun getTransactionStatus(txid: String): NetworkTransactionStatusResponse =
-        apiService.getTransactionStatus(txid)
+    //TODO: Same as above, better error handling.
+    override suspend fun fetchAndStoreTransactions(address: String) {
+        try {
+            val transactions = getTransactions(address)
+            localStore.updateTransactions(address, transactions)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
-    override suspend fun getLatestBlockHeight(): Int =
-        apiService.getLatestBlockHeight()
+    override fun observeAllBalances(): Flow<Map<String, Balance>> {
+        return localStore.observeAllBalances()
+    }
 
-    override suspend fun getLatestBlockHash(): String =
-        apiService.getLatestBlockHash()
-
-    override suspend fun getMempoolData(): NetworkMempoolResponse =
-        apiService.getMempoolData()
-
-    override suspend fun getMempoolTxIds(): List<String> =
-        apiService.getMempoolTxIds()
-
-    override suspend fun getRecentMempoolTransactions(): List<NetworkTransactionResponse> =
-        apiService.getRecentMempoolTransactions()
-
-    override suspend fun getUTXOs(address: String): List<NetworkUTXOResponse> =
-        apiService.getUTXOs(address)
+    override fun observeAllTransactions(): Flow<Map<String, List<Transaction>>> {
+        return localStore.observeAllTransactions()
+    }
 }

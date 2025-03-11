@@ -5,26 +5,21 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HomeScreen(viewModel:HomeViewModel = koinViewModel()) {
-    val balanceState by viewModel.balanceState.collectAsState()
+    val balanceState by viewModel.balances.collectAsStateWithLifecycle()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        Button(onClick = { viewModel.fetchBalance("tb1qtzrhlwxqcsufs8hvg4c3w33utf9hat4x9xlrf7") }) {
-            Text("Fetch Balance")
+    Column {
+        Button(onClick = { viewModel.refresh() }) {
+            Text("Refresh Balances")
         }
 
-        balanceState?.let { balance ->
-            Text("Funded: ${balance.chainStats.fundedTxoSum}")
-            Text("Spent: ${balance.chainStats.spentTxoSum}")
-        } ?: Text("No balance data yet.")
+        balanceState?.forEach { (address, balance) ->
+            Text("Address: $address - Balance: ${balance.chainStats.fundedTxoSum}")
+        } ?: Text("Loading...")
     }
 }
 

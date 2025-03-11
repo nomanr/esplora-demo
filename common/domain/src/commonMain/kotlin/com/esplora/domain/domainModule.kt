@@ -1,13 +1,12 @@
 package com.esplora.domain
 
 import com.esplora.data.dataModule
-import com.esplora.domain.interactors.DefaultGetBalanceInteractor
-import com.esplora.domain.interactors.GetBalanceInteractor
+import com.esplora.domain.interactors.ObserveBalanceInteractor
 import org.koin.dsl.module
 
 val domainModule = module {
     includes(dataModule)
 
-    factory<GetBalanceInteractor> { DefaultGetBalanceInteractor(repository = get()) }
+    factory<ObserveBalanceInteractor> { ObserveBalanceInteractor(repository = get()) }
 
 }

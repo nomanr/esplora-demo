@@ -17,15 +17,8 @@ kotlin {
     listOf(iosArm64(), iosSimulatorArm64())
 
     sourceSets {
-        val desktopMain by getting
-
-        androidMain.dependencies {
-            implementation(libs.koin.android)
-        }
         commonMain.dependencies {
-            implementation(libs.koin.core)
-            api(project(":common:models"))
-            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.kotlinx.serialization.json)
         }
 
     }
@@ -33,7 +26,7 @@ kotlin {
 
 
 android {
-    namespace = "com.esplora.store"
+    namespace = "com.esplora.models"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

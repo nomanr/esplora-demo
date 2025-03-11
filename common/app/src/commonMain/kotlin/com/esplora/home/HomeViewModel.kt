@@ -3,25 +3,28 @@ package com.esplora.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.esplora.domain.interactors.GetBalanceInteractor
-import com.esplora.network.models.NetworkBalanceResponse
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.esplora.domain.interactors.ObserveBalanceInteractor
+import com.esplora.models.Balance
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.stateIn
 
 
-class HomeViewModel(private val getBalanceInteractor: GetBalanceInteractor) : ViewModel() {
+class HomeViewModel(private val observeBalanceInteractor: ObserveBalanceInteractor) : ViewModel() {
 
-    private val _balanceState = MutableStateFlow<NetworkBalanceResponse?>(null)
-    val balanceState: StateFlow<NetworkBalanceResponse?> = _balanceState.asStateFlow()
+    init {
+        println("NOMAN>>>>>, STARTING OBSERVE BALANCE INTERACTOR")
+        observeBalanceInteractor(viewModelScope, Unit)
 
-    fun fetchBalance(address: String) {
-        viewModelScope.launch {
-            try {
-                _balanceState.value = getBalanceInteractor.execute(address)
-            } catch (e: Exception) {
-                e.printStackTrace() // Handle errors properly in production
-            }
-        }
+    }
+
+    val balances: StateFlow<Map<String, Balance>?> = observeBalanceInteractor
+        .observe()
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
+
+
+
+    fun refresh() {
+//        observeBalanceInteractor.(viewModelScope)
     }
 }

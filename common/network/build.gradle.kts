@@ -28,6 +28,7 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             api(libs.bundles.ktor.common)
             implementation(libs.koin.core)
+            api(project(":common:models"))
         }
         desktopMain.dependencies {
             implementation(libs.ktor.client.java)
