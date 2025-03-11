@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.kotlinAndroid)
 }
 
 android {
@@ -24,9 +25,14 @@ android {
             isMinifyEnabled = false
         }
     }
+    kotlinOptions {
+        jvmTarget = libs.versions.jvmTarget.get()
+    }
 }
 
 dependencies {
     implementation(project(":common:app"))
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.koin.android)
 }
