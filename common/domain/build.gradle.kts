@@ -18,8 +18,12 @@ kotlin {
 
 
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.koin.android)
+        }
         commonMain.dependencies {
             api(project(":common:data"))
+            implementation(libs.koin.core)
         }
 
     }

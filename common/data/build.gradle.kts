@@ -26,7 +26,6 @@ kotlin {
             api(project(":common:store"))
             implementation(libs.koin.core)
         }
-
     }
 }
 
