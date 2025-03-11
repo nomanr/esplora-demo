@@ -36,7 +36,6 @@ val networkModule = module {
                 url {
                     protocol = URLProtocol.HTTPS
                     host = ApiConfig.TESTNET_API_HOST
-                    path(ApiConfig.TESTNET_API_PATH)
                 }
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
             }
