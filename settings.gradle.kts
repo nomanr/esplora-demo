@@ -28,6 +28,10 @@ dependencyResolutionManagement {
     }
 }
 
-include(":common:app")
 include(":androidApp")
 include(":desktopApp")
+include(":common:app")
+include(":common:network")
+include(":common:store")
+include(":common:data")
+include(":common:domain")

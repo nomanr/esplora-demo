@@ -10,8 +10,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import esplorademoapp.common.generated.resources.Res
-import esplorademoapp.common.generated.resources.compose_multiplatform
+import esplorademoapp.common.app.generated.resources.Res
+import esplorademoapp.common.app.generated.resources.compose_multiplatform
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
