@@ -22,10 +22,12 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
+            implementation(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(libs.kotlinx.serialization.json)
             api(libs.bundles.ktor.common)
+            implementation(libs.koin.core)
         }
         desktopMain.dependencies {
             implementation(libs.ktor.client.java)
