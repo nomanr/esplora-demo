@@ -27,6 +27,11 @@ kotlin {
             api(project(":common:models"))
             implementation(libs.kotlinx.coroutines.core)
         }
+        val commonTest by getting {
+            dependencies {
+                implementation(project(":testing"))
+            }
+        }
 
     }
 }
