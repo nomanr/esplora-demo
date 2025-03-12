@@ -7,7 +7,7 @@ The app is divided into 2 types of high-level modules:
 
 ### Runner modules
 
-They are only responsible for launching the app. E.g. for Android, `androidApp` contains `MainActivity` and Application` class.
+They are only responsible for launching the app. E.g. for Android, `androidApp` contains `MainActivity` and `Application` class.
 
 - `androidApp`
 - `desktopApp`
