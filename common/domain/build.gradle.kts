@@ -25,8 +25,13 @@ kotlin {
             api(project(":common:data"))
             implementation(libs.koin.core)
         }
-
+        val commonTest by getting {
+            dependencies {
+                implementation(project(":testing"))
+            }
+        }
     }
+
 }
 
 android {

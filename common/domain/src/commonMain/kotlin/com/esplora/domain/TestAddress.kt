@@ -1,7 +1,7 @@
 package com.esplora.domain
 
 //FIXME: Address or watch address will come from local storage generally
-internal val testAddresses = listOf(
+val testAddresses = listOf(
     "tb1q2gyu9x3zddj35uxxqnkp3ul6vednrqhukl8hle",
     "tb1qguaz7negafuucqngsyx80jhlpgnl94nlxnng2x",
     "tb1q7hzrgzj5xl8jpl39gexpdq5832yz53ets7whs2",

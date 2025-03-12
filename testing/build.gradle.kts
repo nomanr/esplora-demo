@@ -16,6 +16,7 @@ kotlin {
                 api(libs.mockk)
                 api(libs.kotlin.test.junit)
                 implementation(project(":common:models"))
+                implementation(project(":common:network"))
             }
         }
     }

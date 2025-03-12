@@ -1,8 +1,8 @@
 package com.esplora.data.repository
 
 import app.cash.turbine.test
+import com.esplora.FakeEsploraApiService
 import com.esplora.TestFixtures
-import com.esplora.data.repository.fake.FakeEsploraApiService
 import com.esplora.store.local.DefaultEsploraLocalDataSource
 import kotlinx.coroutines.test.runTest
 import kotlin.test.*

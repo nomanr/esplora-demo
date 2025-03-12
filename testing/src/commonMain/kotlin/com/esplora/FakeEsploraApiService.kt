@@ -1,8 +1,9 @@
-package com.esplora.network.api
+package com.esplora
 
 import com.esplora.TestFixtures
 import com.esplora.models.Utxo
 import com.esplora.models.Transaction
+import com.esplora.network.api.EsploraApiService
 
 class FakeEsploraApiService : EsploraApiService {
     override suspend fun getBalance(address: String): List<Utxo> {

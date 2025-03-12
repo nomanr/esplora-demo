@@ -1,5 +1,6 @@
 package com.esplora.network.api
 
+import com.esplora.FakeEsploraApiService
 import com.esplora.TestFixtures
 import com.esplora.models.Transaction
 import com.esplora.models.Utxo

@@ -1,6 +1,8 @@
 package com.esplora.domain
 
 import com.esplora.data.dataModule
+import com.esplora.domain.interactors.DefaultGetAddresses
+import com.esplora.domain.interactors.GetAddresses
 import com.esplora.domain.interactors.ObserveBalanceInteractor
 import com.esplora.domain.interactors.ObserveTransactionsInteractor
 import org.koin.dsl.module
@@ -10,5 +12,6 @@ val domainModule = module {
 
     factory { ObserveBalanceInteractor(repository = get()) }
     factory { ObserveTransactionsInteractor(repository = get()) }
+    factory<GetAddresses> { DefaultGetAddresses() }
 
 }
