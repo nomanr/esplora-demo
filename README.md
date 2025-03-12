@@ -82,3 +82,8 @@ Unit tests cover the following components:
    - State management
    - User interaction handling
    - Data flow processing
+  
+# Demo
+
+https://github.com/user-attachments/assets/cdbd2afd-eb5f-4304-b910-a3481414dea4
+
