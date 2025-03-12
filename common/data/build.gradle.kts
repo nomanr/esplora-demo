@@ -26,6 +26,11 @@ kotlin {
             api(project(":common:store"))
             implementation(libs.koin.core)
         }
+        val commonTest by getting {
+            dependencies {
+                implementation(project(":testing"))
+            }
+        }
     }
 }
 
