@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.composeCompiler)
 }
 
+//TODO: all gradle files got common stuff like sourcesets, platform targets, dependencies, etc.
+//TODO: leverage gradle plugin to provide common stuff
 kotlin {
     androidTarget {
         compilerOptions {

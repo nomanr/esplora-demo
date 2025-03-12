@@ -22,6 +22,7 @@ import com.esplora.uicomponents.components.card.OutlinedCard
 import com.esplora.utils.Formatter
 import org.koin.compose.viewmodel.koinViewModel
 
+//TODO: Add Pull to Refresh
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
     val addresses by viewModel.addresses.collectAsStateWithLifecycle()
